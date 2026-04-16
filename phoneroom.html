@@ -4,166 +4,184 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Phone Room PRO</title>
+<title>PhoneRoom PRO</title>
 
-<meta name="description" content="Telefon al və sat platforması">
-<meta name="keywords" content="iphone samsung telefon baku al sat">
+<meta name="description" content="Premium telefon al və sat platforması">
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
 }
 
 body{
-    background:linear-gradient(135deg,#0b1220,#111827);
-    color:white;
+background: radial-gradient(circle at top,#0f172a,#020617);
+color:white;
 }
 
 /* HEADER */
 header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px;
-    background:#0a0f1c;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px;
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 header h1{
-    color:#00ffd5;
+color:#00ffd5;
+font-size:18px;
 }
 
 /* HERO */
 .hero{
-    text-align:center;
-    padding:20px;
+text-align:center;
+padding:25px;
 }
 
 .hero h2{
-    font-size:22px;
+font-size:24px;
 }
 
 .hero p{
-    opacity:0.7;
+opacity:0.7;
 }
 
 /* GRID */
 .container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    gap:15px;
-    padding:15px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
+padding:15px;
 }
 
 /* CARD */
 .card{
-    background:#111827;
-    border-radius:12px;
-    overflow:hidden;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:14px;
+overflow:hidden;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.04);
+border-color:#00ffd5;
 }
 
 .card img{
-    width:100%;
-    height:140px;
-    object-fit:cover;
+width:100%;
+height:140px;
+object-fit:cover;
 }
 
 .card h3{
-    margin:8px;
-    font-size:14px;
+margin:8px;
+font-size:14px;
 }
 
 .price{
-    margin:0 8px;
-    color:#00ffd5;
-    font-weight:bold;
+margin:0 8px;
+color:#00ffd5;
+font-weight:bold;
 }
 
 /* BUTTONS */
 .btn{
-    width:90%;
-    margin:5px auto;
-    display:block;
-    padding:8px;
-    border:none;
-    border-radius:8px;
-    font-weight:bold;
+width:90%;
+margin:6px auto;
+display:block;
+padding:9px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
 }
 
-.buy{background:#00ffd5;}
-.sell{background:#ff3b3b;color:white;}
+.buy{
+background:linear-gradient(90deg,#00ffd5,#00a6ff);
+color:black;
+}
+
+.sell{
+background:linear-gradient(90deg,#ff3b3b,#ff7a00);
+color:white;
+}
 
 /* MODAL */
 .modal{
-    position:fixed;
-    inset:0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    background:rgba(0,0,0,0.7);
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+display:none;
+justify-content:center;
+align-items:center;
 }
 
 .box{
-    background:#111827;
-    padding:15px;
-    border-radius:10px;
-    width:90%;
-    max-width:300px;
+background:#0f172a;
+padding:18px;
+border-radius:12px;
+width:90%;
+max-width:320px;
 }
 
 input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:none;
-    border-radius:6px;
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
+border-radius:8px;
 }
 
 /* ADMIN */
 .admin{
-    display:none;
-    padding:15px;
-    background:#0a0f1c;
+display:none;
+padding:15px;
+background:#0b1220;
 }
 
 .admin input{
-    width:100%;
-    padding:10px;
-    margin:5px 0;
+width:100%;
+padding:10px;
+margin:5px 0;
 }
 
 .admin button{
-    width:100%;
-    padding:10px;
-    background:#00ffd5;
-    border:none;
-    border-radius:6px;
+width:100%;
+padding:10px;
+background:#00ffd5;
+border:none;
+border-radius:8px;
 }
 
 /* LOGIN */
 .login{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.85);
-    justify-content:center;
-    align-items:center;
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.85);
+justify-content:center;
+align-items:center;
 }
 
 .login-box{
-    background:#111827;
-    padding:20px;
-    width:90%;
-    max-width:300px;
+background:#0f172a;
+padding:20px;
+width:90%;
+max-width:300px;
+border-radius:12px;
 }
 
 .login-box input{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
+width:100%;
+padding:10px;
+margin:10px 0;
 }
 
 </style>
@@ -173,16 +191,16 @@ input{
 <body>
 
 <header>
-<h1>📱 Phone Room PRO</h1>
+<h1>📱 PhoneRoom PRO</h1>
 <button onclick="openLogin()" style="padding:8px 12px;background:#00ffd5;border:none;border-radius:8px;">Admin</button>
 </header>
 
 <div class="hero">
-<h2>Telefon Al & Sat Platformu</h2>
+<h2>Premium Telefon Market</h2>
 <p>iPhone • Samsung • Xiaomi</p>
 </div>
 
-<!-- ADMIN PANEL -->
+<!-- ADMIN -->
 <div class="admin" id="admin">
 <h3>Admin Panel</h3>
 <input id="name" placeholder="Telefon adı">
@@ -208,20 +226,19 @@ input{
 <div class="box">
 <h3>Müraciət</h3>
 <input id="phone" placeholder="Nömrə">
-<button class="btn buy" onclick="sendWhatsApp()">WhatsApp göndər</button>
+<button class="btn buy" onclick="sendWhatsApp()">WhatsApp Göndər</button>
 </div>
 </div>
 
 <script>
 
 let phones = JSON.parse(localStorage.getItem("phones")) || [
-{name:"iPhone 15 Pro", price:"2200$", img:"https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5"},
+{name:"iPhone 15 Pro Max", price:"2200$", img:"https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5"},
 {name:"Samsung S24 Ultra", price:"1900$", img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"}
 ];
 
 let selected = "";
 
-/* RENDER */
 function render(){
 let list = document.getElementById("list");
 list.innerHTML = "";
@@ -234,14 +251,12 @@ list.innerHTML += `
 <p class="price">${p.price}</p>
 <button class="btn buy" onclick="buy('${p.name}')">AL</button>
 <button class="btn sell" onclick="sell('${p.name}')">SAT</button>
-</div>
-`;
+</div>`;
 });
 }
 
 render();
 
-/* BUY SELL */
 function buy(name){
 selected = "AL: " + name;
 document.getElementById("modal").style.display="flex";
@@ -252,20 +267,17 @@ selected = "SAT: " + name;
 document.getElementById("modal").style.display="flex";
 }
 
-/* WHATSAPP */
 function sendWhatsApp(){
 let phone = document.getElementById("phone").value;
 
-let msg = selected + " | Nömrə: " + phone;
-
-let url = "https://wa.me/994501234567?text=" + encodeURIComponent(msg);
+let url = "https://wa.me/994501234567?text=" + encodeURIComponent(selected + " | " + phone);
 
 window.open(url,"_blank");
 
 document.getElementById("modal").style.display="none";
 }
 
-/* ADMIN LOGIN */
+/* ADMIN */
 function openLogin(){
 document.getElementById("login").style.display="flex";
 }
@@ -279,20 +291,14 @@ if(pass === SECRET){
 document.getElementById("admin").style.display="block";
 document.getElementById("login").style.display="none";
 }else{
-alert("Səhv şifrə!");
+alert("Səhv şifrə");
 }
 }
 
-/* ADD PHONE */
 function addPhone(){
 let name = document.getElementById("name").value;
 let price = document.getElementById("price").value;
 let img = document.getElementById("img").value;
-
-if(!name || !price || !img){
-alert("Hamısını doldur");
-return;
-}
 
 phones.push({name,price,img});
 localStorage.setItem("phones", JSON.stringify(phones));
