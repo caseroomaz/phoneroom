@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PhoneRoom PRO</title>
 
 <style>
@@ -14,7 +15,7 @@ font-family:Arial;
 }
 
 body{
-background:#0b1220;
+background: radial-gradient(circle at top,#0f172a,#020617);
 color:white;
 }
 
@@ -24,7 +25,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:15px;
-background:#111a2e;
+background:rgba(255,255,255,0.04);
 }
 
 header h1{
@@ -32,82 +33,65 @@ color:#00ffd5;
 font-size:18px;
 }
 
-/* SEARCH */
-.search{
-padding:10px;
+/* FILTER + SEARCH */
+.topbar{
 display:flex;
 gap:10px;
+padding:10px;
 flex-wrap:wrap;
 }
 
-.search input{
-flex:1;
+input,select{
 padding:10px;
-border-radius:10px;
-border:none;
-}
-
-.filter-btn{
-padding:8px 10px;
-border:none;
 border-radius:8px;
-background:#1f2a44;
-color:white;
-cursor:pointer;
+border:none;
+outline:none;
 }
 
 /* GRID */
 .container{
 display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-padding:10px;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:15px;
+padding:15px;
 }
 
 /* CARD */
 .card{
-background:#121a2b;
+background:rgba(255,255,255,0.05);
 border-radius:14px;
 overflow:hidden;
-border:1px solid #1f2a44;
-cursor:pointer;
+border:1px solid rgba(255,255,255,0.1);
+transition:0.3s;
 position:relative;
 }
 
 .card.vip{
 border:2px solid gold;
-box-shadow:0 0 10px gold;
+box-shadow:0 0 15px gold;
+}
+
+.card:hover{
+transform:scale(1.03);
 }
 
 .card img{
 width:100%;
-height:200px;
+height:190px;
 object-fit:cover;
 }
 
 .card h3{
-font-size:13px;
-margin:6px;
+margin:8px;
+font-size:14px;
 }
 
 .price{
+margin:0 8px;
 color:#00ffd5;
-margin:0 6px;
 font-weight:bold;
 }
 
-.vip-tag{
-position:absolute;
-top:8px;
-left:8px;
-background:gold;
-color:black;
-font-size:10px;
-padding:3px 6px;
-border-radius:6px;
-}
-
-/* BUTTON */
 .btn{
 width:90%;
 margin:6px auto;
@@ -124,43 +108,16 @@ background:linear-gradient(90deg,#00ffd5,#00a6ff);
 color:black;
 }
 
-/* SELL FLOAT */
-.sell-float{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#ff3b3b;
-color:white;
-padding:12px 15px;
-border-radius:50px;
-border:none;
-font-weight:bold;
-}
-
-/* MODAL */
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.7);
+/* ADMIN */
+.admin{
 display:none;
-justify-content:center;
-align-items:center;
-}
-
-.box{
-background:#111a2e;
 padding:15px;
-border-radius:12px;
-width:90%;
-max-width:320px;
 }
 
-input,textarea{
+.admin input, .admin select{
 width:100%;
+margin:5px 0;
 padding:10px;
-margin:6px 0;
-border:none;
-border-radius:8px;
 }
 
 /* LOGIN */
@@ -174,11 +131,41 @@ align-items:center;
 }
 
 .login-box{
-background:#111a2e;
+background:#0f172a;
 padding:20px;
-border-radius:12px;
 width:90%;
 max-width:300px;
+}
+
+/* MODAL */
+.modal{
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,0.7);
+}
+
+.box{
+background:#0f172a;
+padding:15px;
+width:90%;
+max-width:320px;
+border-radius:12px;
+}
+
+textarea,input{
+width:100%;
+padding:10px;
+margin:6px 0;
+border-radius:8px;
+border:none;
+}
+
+.seller-box{
+padding:15px;
+background:#0b1220;
 }
 </style>
 </head>
@@ -190,66 +177,62 @@ max-width:300px;
 <button onclick="openLogin()">Admin</button>
 </header>
 
-<!-- SEARCH -->
-<div class="search">
-<input id="search" placeholder="Axtar..." oninput="render()">
-<button class="filter-btn" onclick="setFilter('all')">All</button>
-<button class="filter-btn" onclick="setFilter('iPhone')">iPhone</button>
-<button class="filter-btn" onclick="setFilter('Samsung')">Samsung</button>
-<button class="filter-btn" onclick="setFilter('Xiaomi')">Xiaomi</button>
+<!-- SEARCH + FILTER -->
+<div class="topbar">
+<input id="search" oninput="render()" placeholder="Axtar...">
+<select id="filter" onchange="render()">
+<option value="all">Hamısı</option>
+<option value="iPhone">iPhone</option>
+<option value="Samsung">Samsung</option>
+<option value="Xiaomi">Xiaomi</option>
+</select>
 </div>
 
 <!-- ADMIN -->
-<div class="login" id="login">
-<div class="login-box">
-<h3>Admin</h3>
-<input type="password" id="pass" placeholder="Şifrə">
-<button onclick="checkPass()">Giriş</button>
-</div>
-</div>
-
-<div id="admin" style="display:none;padding:10px;">
+<div class="admin" id="admin">
 <h3>Admin Panel</h3>
-<input id="name" placeholder="Ad">
+<input id="name" placeholder="Model">
 <input id="price" placeholder="Qiymət">
-<input id="img" placeholder="Şəkil URL">
-<textarea id="desc" placeholder="Məlumat"></textarea>
-<label>VIP <input type="checkbox" id="vip"></label>
+<input id="img" type="file">
+<select id="brand">
+<option>iPhone</option>
+<option>Samsung</option>
+<option>Xiaomi</option>
+</select>
+<label>VIP?</label>
+<select id="vip">
+<option value="no">No</option>
+<option value="yes">Yes</option>
+</select>
 <button onclick="addPhone()">Əlavə et</button>
 </div>
 
 <!-- PRODUCTS -->
 <div class="container" id="list"></div>
 
-<!-- SELL BUTTON -->
-<button class="sell-float" onclick="openSell()">SAT</button>
+<!-- SELLERS PANEL -->
+<div class="seller-box">
+<h3>📦 SATANLAR (müraciət)</h3>
+<p>Burada satmaq istəyənlər WhatsApp-a yönləndirilir</p>
+<button onclick="sell()">SAT</button>
+</div>
 
-<!-- MODAL BUY -->
+<!-- LOGIN -->
+<div class="login" id="login">
+<div class="login-box">
+<h3>Admin Login</h3>
+<input type="password" id="pass">
+<button onclick="checkPass()">Giriş</button>
+</div>
+</div>
+
+<!-- BUY MODAL -->
 <div class="modal" id="modal">
 <div class="box">
-<h3>AL Müraciət</h3>
+<h3>AL MÜRACİƏTİ</h3>
+<textarea id="info" placeholder="Telefon haqqında yazı..."></textarea>
 <input id="phone" placeholder="Sənin nömrən">
-<button class="btn buy" onclick="sendBuy()">WhatsApp göndər</button>
-</div>
-</div>
-
-<!-- MODAL SELL -->
-<div class="modal" id="sellModal">
-<div class="box">
-<h3>Satış Müraciəti</h3>
-<input id="sellPhone" placeholder="Sənin nömrən">
-<input id="sellName" placeholder="Telefon adı">
-<button class="btn buy" onclick="sendSell()">Göndər</button>
-</div>
-</div>
-
-<!-- DETAILS -->
-<div class="modal" id="detailModal">
-<div class="box">
-<h3 id="dname"></h3>
-<p id="ddesc"></p>
-<p id="dprice" style="color:#00ffd5"></p>
-<button class="btn buy" onclick="closeDetail()">Bağla</button>
+<button class="btn buy" onclick="sendWhatsApp()">Göndər</button>
 </div>
 </div>
 
@@ -257,97 +240,104 @@ max-width:300px;
 
 let phones = JSON.parse(localStorage.getItem("phones")) || [];
 
-let selected="";
-let filter="all";
-let selectedItem=null;
+let selected = "";
 
 function render(){
-let list=document.getElementById("list");
-list.innerHTML="";
+let list = document.getElementById("list");
+list.innerHTML = "";
 
-let search=document.getElementById("search").value.toLowerCase();
+let search = document.getElementById("search").value.toLowerCase();
+let filter = document.getElementById("filter").value;
 
 phones
+.sort((a,b)=> (b.vip==="yes") - (a.vip==="yes"))
 .filter(p=>{
-return (filter==="all" || p.name.includes(filter))
-&& p.name.toLowerCase().includes(search);
+return (filter==="all" || p.brand===filter) &&
+p.name.toLowerCase().includes(search);
 })
-.forEach((p,i)=>{
+.forEach(p=>{
 
-list.innerHTML+=`
-<div class="card ${p.vip?'vip':''}" onclick="openDetail(${i})">
-${p.vip?'<div class="vip-tag">VIP</div>':''}
+list.innerHTML += `
+<div class="card ${p.vip==="yes"?'vip':''}">
 <img src="${p.img}">
 <h3>${p.name}</h3>
 <p class="price">${p.price}</p>
-<button class="btn buy" onclick="event.stopPropagation();buy('${p.name}')">AL</button>
-</div>
-`;
+<button class="btn buy" onclick="buy('${p.name}')">AL</button>
+</div>`;
 });
 }
 
-function setFilter(f){filter=f;render();}
+render();
 
+/* BUY */
 function buy(name){
-selected=name;
+selected = name;
 document.getElementById("modal").style.display="flex";
 }
 
-function sendBuy(){
-let phone=document.getElementById("phone").value;
-let url=`https://wa.me/994703099330?text=${encodeURIComponent("AL: "+selected+" | Müştəri: "+phone+" | Device: "+navigator.userAgent)}`;
+/* SELL */
+function sell(){
+let url = "https://wa.me/994703099330?text=" +
+encodeURIComponent("SATMAQ istəyirəm");
+
 window.open(url,"_blank");
 }
 
-function openSell(){
-document.getElementById("sellModal").style.display="flex";
-}
+/* SEND BUY */
+function sendWhatsApp(){
+let phone = document.getElementById("phone").value;
+let info = document.getElementById("info").value;
 
-function sendSell(){
-let phone=document.getElementById("sellPhone").value;
-let name=document.getElementById("sellName").value;
-let url=`https://wa.me/994703099330?text=${encodeURIComponent("SAT: "+name+" | Tel: "+phone)}`;
+let device = navigator.userAgent;
+
+let url = "https://wa.me/994703099330?text=" +
+encodeURIComponent(
+"AL: " + selected +
+"\nNömrə: " + phone +
+"\nInfo: " + info +
+"\nDevice: " + device
+);
+
 window.open(url,"_blank");
+document.getElementById("modal").style.display="none";
 }
 
-function openDetail(i){
-selectedItem=phones[i];
-document.getElementById("dname").innerText=selectedItem.name;
-document.getElementById("ddesc").innerText=selectedItem.desc || "";
-document.getElementById("dprice").innerText=selectedItem.price;
-document.getElementById("detailModal").style.display="flex";
-}
-
-function closeDetail(){
-document.getElementById("detailModal").style.display="none";
-}
-
-/* ADMIN */
+/* LOGIN */
 function openLogin(){
 document.getElementById("login").style.display="flex";
 }
 
+const SECRET = "1234";
+
 function checkPass(){
-if(document.getElementById("pass").value==="1234"){
+if(document.getElementById("pass").value===SECRET){
 document.getElementById("admin").style.display="block";
 document.getElementById("login").style.display="none";
-}
+}else alert("Səhv");
 }
 
+/* IMAGE UPLOAD */
 function addPhone(){
+let name = document.getElementById("name").value;
+let price = document.getElementById("price").value;
+let brand = document.getElementById("brand").value;
+let vip = document.getElementById("vip").value;
+
+let file = document.getElementById("img").files[0];
+let reader = new FileReader();
+
+reader.onload = function(){
 phones.push({
-name:document.getElementById("name").value,
-price:document.getElementById("price").value,
-img:document.getElementById("img").value,
-desc:document.getElementById("desc").value,
-vip:document.getElementById("vip").checked
+name,price,brand,vip,
+img:reader.result
 });
 
 localStorage.setItem("phones",JSON.stringify(phones));
 render();
 }
 
-render();
+reader.readAsDataURL(file);
+}
 
 </script>
 
