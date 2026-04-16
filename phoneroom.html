@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Phone Market PRO | Telefon Al & Sat</title>
+<title>Phone Room PRO</title>
 
-<!-- SEO -->
-<meta name="description" content="Telefon al və sat platforması. iPhone, Samsung və digər modellər. Ən yaxşı qiymətlər.">
-<meta name="keywords" content="telefon al sat, iphone, samsung, baku telefon, phone market az">
-<meta name="author" content="Phone Market PRO">
-
-<!-- Open Graph (Google + social media) -->
-<meta property="og:title" content="Phone Market PRO">
-<meta property="og:description" content="Telefon al və sat platforması">
-<meta property="og:type" content="website">
+<meta name="description" content="Telefon al və sat platforması">
+<meta name="keywords" content="iphone samsung telefon baku al sat">
 
 <style>
 
@@ -36,29 +28,18 @@ header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:15px 20px;
+    padding:15px;
     background:#0a0f1c;
-    position:sticky;
-    top:0;
 }
 
 header h1{
     color:#00ffd5;
-    font-size:18px;
-}
-
-header button{
-    padding:8px 12px;
-    border:none;
-    border-radius:8px;
-    background:#00ffd5;
-    font-weight:bold;
 }
 
 /* HERO */
 .hero{
     text-align:center;
-    padding:25px 15px;
+    padding:20px;
 }
 
 .hero h2{
@@ -119,24 +100,26 @@ header button{
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.7);
     display:none;
     justify-content:center;
     align-items:center;
+    background:rgba(0,0,0,0.7);
 }
 
-.modal-box{
+.box{
     background:#111827;
     padding:15px;
     border-radius:10px;
     width:90%;
-    max-width:320px;
+    max-width:300px;
 }
 
-.modal-box input{
+input{
     width:100%;
     padding:10px;
     margin:8px 0;
+    border:none;
+    border-radius:6px;
 }
 
 /* ADMIN */
@@ -150,7 +133,6 @@ header button{
     width:100%;
     padding:10px;
     margin:5px 0;
-    border:none;
 }
 
 .admin button{
@@ -158,6 +140,7 @@ header button{
     padding:10px;
     background:#00ffd5;
     border:none;
+    border-radius:6px;
 }
 
 /* LOGIN */
@@ -183,36 +166,29 @@ header button{
     margin:10px 0;
 }
 
-/* SMALL FOOTER */
-footer{
-    text-align:center;
-    padding:20px;
-    opacity:0.5;
-    font-size:12px;
-}
-
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <h1>📱 Phone Market PRO</h1>
-    <button onclick="openLogin()">Admin</button>
+<h1>📱 Phone Room PRO</h1>
+<button onclick="openLogin()" style="padding:8px 12px;background:#00ffd5;border:none;border-radius:8px;">Admin</button>
 </header>
 
 <div class="hero">
-    <h2>Telefon Al & Sat Platformu</h2>
-    <p>iPhone • Samsung • Xiaomi və daha çox</p>
+<h2>Telefon Al & Sat Platformu</h2>
+<p>iPhone • Samsung • Xiaomi</p>
 </div>
 
 <!-- ADMIN PANEL -->
 <div class="admin" id="admin">
-    <h3>Admin Panel</h3>
-    <input id="name" placeholder="Telefon adı">
-    <input id="price" placeholder="Qiymət">
-    <input id="img" placeholder="Şəkil URL">
-    <button onclick="addPhone()">Əlavə et</button>
+<h3>Admin Panel</h3>
+<input id="name" placeholder="Telefon adı">
+<input id="price" placeholder="Qiymət">
+<input id="img" placeholder="Şəkil URL">
+<button onclick="addPhone()">Əlavə et</button>
 </div>
 
 <!-- PRODUCTS -->
@@ -220,112 +196,108 @@ footer{
 
 <!-- LOGIN -->
 <div class="login" id="login">
-    <div class="login-box">
-        <h3>Admin Login</h3>
-        <input type="password" id="pass" placeholder="Şifrə">
-        <button onclick="checkPass()">Giriş</button>
-    </div>
+<div class="login-box">
+<h3>Admin Login</h3>
+<input type="password" id="pass" placeholder="Şifrə">
+<button onclick="checkPass()">Giriş</button>
+</div>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-    <div class="modal-box">
-        <h3>Müraciət</h3>
-        <input id="phone" placeholder="Nömrən">
-        <button class="btn buy" onclick="sendWhatsApp()">WhatsApp göndər</button>
-    </div>
+<div class="box">
+<h3>Müraciət</h3>
+<input id="phone" placeholder="Nömrə">
+<button class="btn buy" onclick="sendWhatsApp()">WhatsApp göndər</button>
 </div>
-
-<footer>
-    © Phone Market PRO - Bütün hüquqlar qorunur
-</footer>
+</div>
 
 <script>
 
-/* DEFAULT DATA */
 let phones = JSON.parse(localStorage.getItem("phones")) || [
-    {name:"iPhone 15 Pro Max", price:"2200$", img:"https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5"},
-    {name:"Samsung S24 Ultra", price:"1900$", img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"}
+{name:"iPhone 15 Pro", price:"2200$", img:"https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5"},
+{name:"Samsung S24 Ultra", price:"1900$", img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"}
 ];
 
 let selected = "";
 
 /* RENDER */
 function render(){
-    let list = document.getElementById("list");
-    list.innerHTML = "";
-    phones.forEach((p)=>{
-        list.innerHTML += `
-        <div class="card">
-            <img src="${p.img}">
-            <h3>${p.name}</h3>
-            <p class="price">${p.price}</p>
-            <button class="btn buy" onclick="buy('${p.name}')">AL</button>
-            <button class="btn sell" onclick="sell('${p.name}')">SAT</button>
-        </div>`;
-    });
+let list = document.getElementById("list");
+list.innerHTML = "";
+
+phones.forEach(p=>{
+list.innerHTML += `
+<div class="card">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<p class="price">${p.price}</p>
+<button class="btn buy" onclick="buy('${p.name}')">AL</button>
+<button class="btn sell" onclick="sell('${p.name}')">SAT</button>
+</div>
+`;
+});
 }
+
 render();
 
 /* BUY SELL */
 function buy(name){
-    selected = "AL: " + name;
-    document.getElementById("modal").style.display="flex";
+selected = "AL: " + name;
+document.getElementById("modal").style.display="flex";
 }
 
 function sell(name){
-    selected = "SAT: " + name;
-    document.getElementById("modal").style.display="flex";
+selected = "SAT: " + name;
+document.getElementById("modal").style.display="flex";
 }
 
 /* WHATSAPP */
 function sendWhatsApp(){
-    let phone = document.getElementById("phone").value;
+let phone = document.getElementById("phone").value;
 
-    let msg = selected + " | Nömrə: " + phone;
+let msg = selected + " | Nömrə: " + phone;
 
-    // SƏNİN WHATSAPP NÖMRƏNİ BURDA DƏYİŞ
-    let url = "https://wa.me/994501234567?text=" + encodeURIComponent(msg);
+let url = "https://wa.me/994501234567?text=" + encodeURIComponent(msg);
 
-    window.open(url,"_blank");
+window.open(url,"_blank");
 
-    document.getElementById("modal").style.display="none";
+document.getElementById("modal").style.display="none";
 }
 
-/* LOGIN SECURITY (basic protection) */
+/* ADMIN LOGIN */
 function openLogin(){
-    document.getElementById("login").style.display="flex";
+document.getElementById("login").style.display="flex";
 }
 
-/* GİZLİ ADMIN ŞİFRƏSİ (OBFUSCATED) */
-const SECRET = atob("MTIzNA=="); // 1234
+const SECRET = atob("MTIzNA==");
 
 function checkPass(){
-    let pass = document.getElementById("pass").value;
+let pass = document.getElementById("pass").value;
 
-    if(pass === SECRET){
-        document.getElementById("admin").style.display="block";
-        document.getElementById("login").style.display="none";
-    }else{
-        alert("Səhv şifrə!");
-    }
+if(pass === SECRET){
+document.getElementById("admin").style.display="block";
+document.getElementById("login").style.display="none";
+}else{
+alert("Səhv şifrə!");
+}
 }
 
-/* ADD PRODUCT */
+/* ADD PHONE */
 function addPhone(){
-    let name = document.getElementById("name").value;
-    let price = document.getElementById("price").value;
-    let img = document.getElementById("img").value;
+let name = document.getElementById("name").value;
+let price = document.getElementById("price").value;
+let img = document.getElementById("img").value;
 
-    if(!name || !price || !img){
-        alert("Hamısını doldur");
-        return;
-    }
+if(!name || !price || !img){
+alert("Hamısını doldur");
+return;
+}
 
-    phones.push({name,price,img});
-    localStorage.setItem("phones", JSON.stringify(phones));
+phones.push({name,price,img});
+localStorage.setItem("phones", JSON.stringify(phones));
 
-    render();
+render();
 }
 
 </script>
